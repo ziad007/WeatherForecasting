@@ -6,6 +6,7 @@ let SharedAPICall = APICall()
 typealias response = Result<Any?, NSError>
 
 let baseURLString = "https://api.openweathermap.org/data/2.5"
+let apiKey = "5438d6ca9cbb89943826e67dabc61a78"
 
 protocol RequestApi {
     var path: String { get }
@@ -16,7 +17,11 @@ protocol RequestApi {
 
 extension RequestApi {
     var completeURLString: String {
-        return "\([baseURLString, path].joined(separator: "/"))\(queryString ?? "")"
+        var query = queryString ?? ""
+        if  query != "" {
+            query = "\(query)&APPID=\(apiKey)"
+        }
+        return "\([baseURLString, path].joined(separator: "/"))\(query)"
     }
 }
 

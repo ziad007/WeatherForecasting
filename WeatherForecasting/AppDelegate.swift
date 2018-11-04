@@ -7,42 +7,28 @@
 //
 
 import UIKit
+import Firebase
+import CoreLocation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    let locationManager = CLLocationManager()
+    fileprivate var fetchWeatherIfNeeded: Bool = true
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
+        FirebaseApp.configure()
+        setupTabviewController()
+        setupLocationManager()
 
+        UINavigationBar.appearance().backgroundColor = .white
 
+        Timer.scheduledTimer(withTimeInterval: 20, repeats: true) { _ in
+            self.fetchWeatherIfNeeded = true
+        }
 
-        let tabBarController = UITabBarController()
-        tabBarController.tabBar.backgroundColor = .white
-        tabBarController.tabBar.barTintColor = UIColor.white
-      //  tabBarController?.tabBar.unselectedItemTintColor = UIColor.secondaryTextColor
-
-
-        let currentWeatherViewVC = CurrentWeatherViewController()
-        let currentWeatheNavigationController = UINavigationController(rootViewController: currentWeatherViewVC)
-        currentWeatheNavigationController.tabBarItem = UITabBarItem(title: "Today", image: UIImage(named: "25x25 Today Active (Tab)"), tag: 0)
-
-        let forecastViewVC = ForecastViewController()
-        let forecastNavigationController = UINavigationController(rootViewController: forecastViewVC)
-        forecastNavigationController.tabBarItem = UITabBarItem(title: "Forecast", image: UIImage(named: "25x25 Forecast Active (Tab)"), tag: 0)
-
-        let controllers = [currentWeatheNavigationController, forecastNavigationController]
-
-        tabBarController.viewControllers = controllers
-
-        window?.rootViewController = tabBarController
-
-        window?.makeKeyAndVisible()
-
-       // UINavigationBar.appearance().backgroundColor = UIColor.appColor
-        // Override point for customization after application launch.
         return true
     }
 
@@ -68,6 +54,54 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    private func setupLocationManager() {
+        locationManager.requestAlwaysAuthorization()
+        locationManager.requestWhenInUseAuthorization()
 
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
+        }
+
+    }
+
+    private func setupTabviewController() {
+        let tabBarController = UITabBarController()
+        tabBarController.tabBar.backgroundColor = .white
+        tabBarController.tabBar.barTintColor = UIColor.white
+        //  tabBarController?.tabBar.unselectedItemTintColor = UIColor.secondaryTextColor
+
+        let currentWeatherViewVC = CurrentWeatherViewController()
+        let currentWeatheNavigationController = UINavigationController(rootViewController: currentWeatherViewVC)
+        currentWeatheNavigationController.tabBarItem = UITabBarItem(title: "Today", image: UIImage(named: "25x25 Today Active (Tab)"), tag: 0)
+
+        let forecastViewVC = ForecastViewController()
+        let forecastNavigationController = UINavigationController(rootViewController: forecastViewVC)
+        forecastNavigationController.tabBarItem = UITabBarItem(title: "Forecast", image: UIImage(named: "25x25 Forecast Active (Tab)"), tag: 0)
+
+        let controllers = [currentWeatheNavigationController, forecastNavigationController]
+
+        tabBarController.viewControllers = controllers
+
+        window?.rootViewController = tabBarController
+
+        window?.makeKeyAndVisible()
+
+    }
+}
+
+extension AppDelegate: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+
+        if let location = locations.last {
+            LocationStore.shared.saveLocation(for: location)
+
+            if fetchWeatherIfNeeded {
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "didReceiveLocation"), object: location)
+                fetchWeatherIfNeeded = false
+            }
+        }
+    }
 }
 

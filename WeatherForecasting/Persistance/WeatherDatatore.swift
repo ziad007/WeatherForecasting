@@ -1,5 +1,3 @@
-
-
 import Foundation
 import CoreLocation
 
@@ -20,7 +18,7 @@ enum WeatherMode {
 final class WeatherDatatore {
     static let shared = WeatherDatatore()
 
-    func getCurrentWeatherData(for mode: WeatherMode) -> NSDictionary? {
+    func getWeatherData(for mode: WeatherMode) -> NSDictionary? {
         if let data = UserDefaults.standard.object(forKey: mode.key) {
             return data as? NSDictionary
         } else {
