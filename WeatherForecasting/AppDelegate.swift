@@ -15,6 +15,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+
+
+
+
+        let tabBarController = UITabBarController()
+        tabBarController.tabBar.backgroundColor = .white
+        tabBarController.tabBar.barTintColor = UIColor.white
+      //  tabBarController?.tabBar.unselectedItemTintColor = UIColor.secondaryTextColor
+
+
+        let currentWeatherViewVC = CurrentWeatherViewController()
+        let currentWeatheNavigationController = UINavigationController(rootViewController: currentWeatherViewVC)
+        currentWeatheNavigationController.tabBarItem = UITabBarItem(title: "Today", image: UIImage(named: "25x25 Today Active (Tab)"), tag: 0)
+
+        let forecastViewVC = ForecastViewController()
+        let forecastNavigationController = UINavigationController(rootViewController: forecastViewVC)
+        forecastNavigationController.tabBarItem = UITabBarItem(title: "Forecast", image: UIImage(named: "25x25 Forecast Active (Tab)"), tag: 0)
+
+        let controllers = [currentWeatheNavigationController, forecastNavigationController]
+
+        tabBarController.viewControllers = controllers
+
+        window?.rootViewController = tabBarController
+
+        window?.makeKeyAndVisible()
+
+       // UINavigationBar.appearance().backgroundColor = UIColor.appColor
         // Override point for customization after application launch.
         return true
     }
