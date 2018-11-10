@@ -73,9 +73,9 @@ enum IconList: String {
             return "60x60 Snow (Night)"
 
         case .thunderstormDay:
-            return "60x60 thunderstorm (Day)"
+            return "60x60 Thunderstorm (Day)"
         case .thunderstormNight:
-            return "60x60 thunderstorm (Night)"
+            return "60x60 Thunderstorm (Night)"
         }
 
     }
@@ -123,9 +123,9 @@ enum IconList: String {
                 return "100x100 Snow (Night)"
 
             case .thunderstormDay:
-                return "100x100 thunderstorm (Day)"
+                return "100x100 Thunderstorm (Day)"
             case .thunderstormNight:
-                return "100x100 thunderstorm (Night)"
+                return "100x100 Thunderstorm (Night)"
 
             }
     }
@@ -138,24 +138,11 @@ struct Weather {
     var temp: Double?
     var description: String?
     var icon: IconList?
-
-    var iconURL: String {
-        guard let icon = icon else { return "" }
-        return "https://openweathermap.org/img/w/\(icon).png"
-    }
-
-    var temperatureCelcius: String {
-        guard let temp = temp else { return "" }
-        let tempCelcius: Double = temp - 273.15
-
-        return "\(tempCelcius) C"
-    }
 }
 
 extension Weather {
 
     init?(json: [[String: Any]]) {
-
 
         for weather in json {
             if let main = weather["main"] as? String {

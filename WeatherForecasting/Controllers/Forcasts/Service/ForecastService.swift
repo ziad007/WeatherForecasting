@@ -1,11 +1,10 @@
 
 import Foundation
-import CoreLocation
 
 typealias ForecastResponse = (Result<Forecast?, NSError>) -> Void
 
 protocol ForecastServiceProtocol {
-    func getForecast(for location: CLLocation,
+    func getForecast(for location: Location,
                      completionHandler: @escaping ForecastResponse)
 }
 
@@ -16,23 +15,22 @@ final class ForecastService: ForecastServiceProtocol {
         self.apiCall = apiCall
     }
 
-     func getForecast(for location: CLLocation,
+     func getForecast(for location: Location,
                       completionHandler: @escaping ForecastResponse) {
 
-        if let forecastContainer = WeatherDatatore.shared.getWeatherData(for: .forecast) {
-            let weather = Forecast(weatherDictionaries: forecastContainer)
+        if let forecastContainer = DataStore.shared.getData(for: .forecast) {
+            let weather = Forecast(forecatDictionary: forecastContainer)
             completionHandler(Result.success(weather))
         }
 
-        let api = ForecastApi.GetForecast(lat: location.coordinate.latitude, long: location.coordinate.longitude)
+        let api = ForecastApi.GetForecast(lat: location.lat, long: location.long)
         self.apiCall.sendRequest(api) { response in
             switch(response) {
             case .success(let result):
-
                 guard let forecastContainer = result as? NSDictionary else { return }
-                WeatherDatatore.shared.saveWeatherData(with: forecastContainer, for: .forecast)
+                DataStore.shared.save(data: forecastContainer, for: .forecast)
 
-                let weather = Forecast(weatherDictionaries: forecastContainer)
+                let weather = Forecast(forecatDictionary: forecastContainer)
                 completionHandler(Result.success(weather))
             case .failure(let error):
                 completionHandler(Result.failure(error as NSError))

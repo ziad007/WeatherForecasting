@@ -1,11 +1,10 @@
 
 import Foundation
-import CoreLocation
 
 typealias WeatherResponse = (Result<WeatherData?, NSError>) -> Void
 
 protocol CurrentWeatherServiceProtocol {
-    func getCurrentWeather(for loc: CLLocation, completionHandler: @escaping WeatherResponse)
+    func getCurrentWeather(for loc: Location, completionHandler: @escaping WeatherResponse)
 }
 
 final class CurrentWeatherService: CurrentWeatherServiceProtocol {
@@ -16,21 +15,20 @@ final class CurrentWeatherService: CurrentWeatherServiceProtocol {
         self.apiCall = apiCall
     }
 
-    func getCurrentWeather(for loc: CLLocation,
+    func getCurrentWeather(for loc: Location,
                            completionHandler: @escaping WeatherResponse) {
-
-        if let weatherContainer =  WeatherDatatore.shared.getWeatherData(
-            for: .currentWeather) {
+        if let weatherContainer = DataStore.shared.getData(for: .weather) {
             let weather = WeatherData(json: weatherContainer)
             completionHandler(Result.success(weather))
         }
 
-        let api = WeatherApi.GetCurrentWeather(lat: loc.coordinate.latitude, long: loc.coordinate.longitude)
+        let api = WeatherApi.GetCurrentWeather(lat: loc.lat, long: loc.long)
         self.apiCall.sendRequest(api) { response in
             switch(response) {
             case .success(let result):
                 guard let weatherContainer = result as? NSDictionary else { return }
-                WeatherDatatore.shared.saveWeatherData(with: weatherContainer, for: .currentWeather)
+
+                DataStore.shared.save(data: weatherContainer, for: .weather)
 
                let weather = WeatherData(json: weatherContainer)
                 completionHandler(Result.success(weather))

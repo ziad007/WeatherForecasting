@@ -11,10 +11,15 @@ import Foundation
 struct Forecast {
 
     var values = [WeatherData]()
+    var city: City?
 
-    init(weatherDictionaries: NSDictionary) {
+    init(forecatDictionary: NSDictionary) {
 
-        guard let forecastsContainer = weatherDictionaries["list"] as? [NSDictionary] else { return }
+        guard let forecastsContainer = forecatDictionary["list"] as? [NSDictionary] else { return }
+
+        if let cityContainer = forecatDictionary["city"] as? [String: Any] {
+            self.city = City(json: cityContainer)
+        }
 
         self.values = forecastsContainer.compactMap {forcastDictionary in
             guard let weatherData = WeatherData(json: forcastDictionary) else { return nil }

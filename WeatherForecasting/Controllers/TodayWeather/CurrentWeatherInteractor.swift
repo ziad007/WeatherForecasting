@@ -21,10 +21,18 @@ final class CurrentWeathInteractor: CurrentWeatherInteractorInputs, CurrentWeath
     }
 
     func fetchCurrentWeather() {
-        guard let lastLocation = LocationStore.shared.getLastLocation() else { return }
+        guard checkLocationIfEnabled() == true else {
+             controller?.showErrorAlertToEnableLocation(message: "Please enable location services in the settings")
+            return
+        }
+        guard let locDictionary = DataStore.shared.getData(for: .location) else {
+            return
+        }
+
+        let location = Location(dict: locDictionary)
         if !isFetchingData {
             isFetchingData = true
-            currentWeatherService.getCurrentWeather(for: lastLocation) { [weak self] (response) in
+            currentWeatherService.getCurrentWeather(for: location) { [weak self] (response) in
                 guard let localSelf = self else { return }
                 localSelf.isFetchingData = false
 
@@ -32,9 +40,25 @@ final class CurrentWeathInteractor: CurrentWeatherInteractorInputs, CurrentWeath
                 case .success(let response):
                     localSelf.weatherResponse = response
                     localSelf.requestloadCurrentWeatherCompleteHandler?()
-                case .failure(let error): break
+                case .failure(let error):
+                    localSelf.controller?.showErrorAlert(message: error.domain)
+
                 }
             }
         }
+    }
+
+    private func checkLocationIfEnabled() -> Bool {
+        if CLLocationManager.locationServicesEnabled() {
+            switch CLLocationManager.authorizationStatus() {
+            case .denied:
+                return false
+            default:
+                return true
+            }
+        } else {
+            return false
+        }
+
     }
 }

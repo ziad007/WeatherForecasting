@@ -2,7 +2,9 @@
 import Foundation
 
 enum ErrorCodes: Int {
-    case RateLimitExceeded = 403
+    case limitExceeded = 403
+    case restricted = 401
+
     case unknown
 
     init?(code: Int) {
@@ -12,8 +14,10 @@ enum ErrorCodes: Int {
     var message: String {
         switch self {
 
-        case .RateLimitExceeded:
+        case .limitExceeded:
             return "API rate limit exceeded"
+        case .restricted:
+            return "Restricted"
         default:
             return "Unknown Error"
         }

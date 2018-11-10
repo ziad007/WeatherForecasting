@@ -15,6 +15,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     let locationManager = CLLocationManager()
+    var deviceID: String = ""
+    fileprivate let checkWeatherInterval: Double = 20
+
     fileprivate var fetchWeatherIfNeeded: Bool = true
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -22,13 +25,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         setupTabviewController()
         setupLocationManager()
+        generateDeviceID()
 
         UINavigationBar.appearance().backgroundColor = .white
 
-        Timer.scheduledTimer(withTimeInterval: 20, repeats: true) { _ in
+        Timer.scheduledTimer(withTimeInterval: checkWeatherInterval, repeats: true) { _ in
             self.fetchWeatherIfNeeded = true
         }
-
         return true
     }
 
@@ -54,6 +57,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    private func generateDeviceID() {
+        if let deviceID = UserDefaults.standard.string(forKey: "DEVICE_ID") {
+            self.deviceID = deviceID
+        } else {
+            deviceID = UUID().uuidString
+            UserDefaults.standard.set(deviceID, forKey: "DEVICE_ID")
+            UserDefaults.standard.synchronize()
+        }
+    }
+
     private func setupLocationManager() {
         locationManager.requestAlwaysAuthorization()
         locationManager.requestWhenInUseAuthorization()
@@ -63,22 +76,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.startUpdatingLocation()
         }
-
     }
 
     private func setupTabviewController() {
         let tabBarController = UITabBarController()
         tabBarController.tabBar.backgroundColor = .white
         tabBarController.tabBar.barTintColor = UIColor.white
-        //  tabBarController?.tabBar.unselectedItemTintColor = UIColor.secondaryTextColor
+        tabBarController.tabBar.unselectedItemTintColor = .black
 
         let currentWeatherViewVC = CurrentWeatherViewController()
         let currentWeatheNavigationController = UINavigationController(rootViewController: currentWeatherViewVC)
-        currentWeatheNavigationController.tabBarItem = UITabBarItem(title: "Today", image: UIImage(named: "25x25 Today Active (Tab)"), tag: 0)
+
+        currentWeatheNavigationController.tabBarItem = UITabBarItem(title: "Today", image: UIImage(named:"25x25 Today Inactive (Tab)"), selectedImage: UIImage(named:"25x25 Today Active (Tab)"))
 
         let forecastViewVC = ForecastViewController()
         let forecastNavigationController = UINavigationController(rootViewController: forecastViewVC)
-        forecastNavigationController.tabBarItem = UITabBarItem(title: "Forecast", image: UIImage(named: "25x25 Forecast Active (Tab)"), tag: 0)
+
+        forecastNavigationController.tabBarItem = UITabBarItem(title: "Forecast", image: UIImage(named:"25x25 Forecast Inactive (Tab)"), selectedImage: UIImage(named:"25x25 Forecast Active (Tab)"))
 
         let controllers = [currentWeatheNavigationController, forecastNavigationController]
 
@@ -95,7 +109,9 @@ extension AppDelegate: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 
         if let location = locations.last {
-            LocationStore.shared.saveLocation(for: location)
+            let loc = Location(long: location.coordinate.longitude,
+                               lat: location.coordinate.latitude)
+            DataStore.shared.save(data: loc.dictionary as NSDictionary, for: .location)
 
             if fetchWeatherIfNeeded {
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "didReceiveLocation"), object: location)

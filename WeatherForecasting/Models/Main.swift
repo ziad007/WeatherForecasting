@@ -20,8 +20,7 @@ struct Main {
         let convert: Double = 273.15
         guard let temp = temp else { return "" }
         let tempCelcius: Double = temp - convert
-
-        return "\(Int(round(tempCelcius))) C"
+        return "\(Int(round(tempCelcius)))"
     }
 }
 

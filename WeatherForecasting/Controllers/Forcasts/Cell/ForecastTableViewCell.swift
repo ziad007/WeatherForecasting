@@ -2,6 +2,13 @@ import Foundation
 import UIKit
 
 final class ForecastTableViewCell: UITableViewCell {
+    fileprivate var needToDrawSeperator = true
+    static let seperatorViewHeight: CGFloat = 0.2
+
+
+    fileprivate lazy var seperatoHeightConstraint = {
+       return seperatorView.heightAnchor.constraint(equalToConstant: ForecastTableViewCell.seperatorViewHeight)
+    }()
 
     private let rootStackView: UIStackView = {
         let stackView = UIStackView()
@@ -30,7 +37,7 @@ final class ForecastTableViewCell: UITableViewCell {
 
     private let hourLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "ProximaNova-SemiBold", size: 14)
+        label.font = UIFont(name: "ProximaNova-SemiBold", size: 15)
         label.textColor = .darkColor
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -46,10 +53,17 @@ final class ForecastTableViewCell: UITableViewCell {
 
     private let temperatureLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "ProximaNova-SemiBold", size: 50)
+        label.font = UIFont(name: "ProximaNova-Regular", size: 50)
         label.textColor = .dodgerBlue
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
+    }()
+
+    private let seperatorView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor.lightGray
+        return view
     }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -59,6 +73,16 @@ final class ForecastTableViewCell: UITableViewCell {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        if needToDrawSeperator {
+            seperatoHeightConstraint.constant = ForecastTableViewCell.seperatorViewHeight
+        } else {
+            seperatoHeightConstraint.constant = 0
+        }
     }
 
     private func commonInit() {
@@ -73,24 +97,32 @@ final class ForecastTableViewCell: UITableViewCell {
 
         contentView.addSubview(rootStackView)
         contentView.addSubview(temperatureLabel)
+        contentView.addSubview(seperatorView)
+
         layoutComponents()
     }
 
     private func layoutComponents() {
         NSLayoutConstraint.activate([
             rootStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
-            rootStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,constant: -5),
+
             rootStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
 
             temperatureLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
-            temperatureLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,constant: -5),
+            temperatureLabel.bottomAnchor.constraint(equalTo: rootStackView.bottomAnchor),
             temperatureLabel.leadingAnchor.constraint(greaterThanOrEqualTo: rootStackView.trailingAnchor, constant: 16),
             temperatureLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
 
+            seperatorView.topAnchor.constraint(equalTo: rootStackView.bottomAnchor, constant: 5),
+            seperatorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,constant: -5),
+            seperatorView.leadingAnchor.constraint(equalTo: labelStackView.leadingAnchor),
+
+            seperatorView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            seperatoHeightConstraint
             ])
     }
 
-    func configure(weatherData: WeatherData?) {
+    func configure(weatherData: WeatherData?, needToDrawSeperator: Bool) {
         guard let weatherData = weatherData  else {
             return
         }
@@ -99,9 +131,13 @@ final class ForecastTableViewCell: UITableViewCell {
             return
         }
 
+        self.needToDrawSeperator = needToDrawSeperator
+
         hourLabel.text = "\(weatherData.time)"
         weatherDescriptionLabel.text = weatherData.weather?.description
-        temperatureLabel.text = "\(weatherData.main?.temperatureCelcius ?? "-")"
+        temperatureLabel.text = "\(weatherData.main?.temperatureCelcius ?? "")°"
         weatherIconImageView.image = UIImage(named: weather.icon?.smallIconName ?? "")
+
+        self.layoutIfNeeded()
     }
 }

@@ -1,5 +1,4 @@
 import Foundation
-import CoreLocation
 
 protocol ForecastInteractorInputs {
      func fetchForecasting()
@@ -23,10 +22,19 @@ final class ForecastInteractor: ForecastInteractorInputs, ForecastInteractorOutp
         forecastService = ForecastService()
     }
 
-    func fetchForecasting() {
-        guard let lastLocation = LocationStore.shared.getLastLocation() else { return }
+    var cityName: String {
+        return forecastResponse?.city?.name ?? ""
+    }
 
-        forecastService.getForecast(for: lastLocation) { [weak self] (response) in
+    func fetchForecasting() {
+        guard let locDictionary = DataStore.shared.getData(for: .location) else {
+              controller?.showErrorAlert(message: "Your location is not set yet, please try again")
+            return
+        }
+
+        let location = Location(dict: locDictionary)
+
+        forecastService.getForecast(for: location) { [weak self] (response) in
             guard let localSelf = self else { return }
             switch response {
             case .success(let response):
@@ -44,14 +52,14 @@ final class ForecastInteractor: ForecastInteractorInputs, ForecastInteractorOutp
         return forecastResponse.values.filter { weatherData in
             let calendar = NSCalendar.current
 
-            let components = calendar.dateComponents([.day], from:  Date(), to:  weatherData.dt)
+            let components = calendar.dateComponents([.day], from: Date(), to:  weatherData.dt)
             return components.day == dayIndex
         }
 
     }
     private func fillForecastWeaterDataByDay() {
-        for index in 0...numberOfDaysForecasting {
-            forecastingWeatherByDay[index] = getForcastingWeather(for: index)
+        for dayIndex in 0...numberOfDaysForecasting {
+            forecastingWeatherByDay[dayIndex] = getForcastingWeather(for: dayIndex)
         }
     }
 }

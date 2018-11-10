@@ -7,13 +7,13 @@ final class CurrentWeatherViewController: UIViewController {
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var weatherDescriptionLabel: UILabel!
-
     @IBOutlet weak var pressureLabel: UILabel!
     @IBOutlet weak var hummidityLabel: UILabel!
     @IBOutlet weak var windLabel: UILabel!
     @IBOutlet weak var windDegreeLabel: UILabel!
-
     @IBOutlet weak var precipitationLabel: UILabel!
+    @IBOutlet weak var headerSeperator: UIView!
+
     let locationManager = CLLocationManager()
     fileprivate var fetchWeatherIfNeeded = true
     let refreshWeatherDuration: TimeInterval = 20
@@ -40,6 +40,16 @@ final class CurrentWeatherViewController: UIViewController {
         setupLoadCompletion()
     }
 
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        UIGraphicsBeginImageContext(view.frame.size)
+        UIImage(named: "2px Line")?.draw(in: self.view.bounds)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        headerSeperator.backgroundColor = UIColor.init(patternImage: image!)
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchData()
@@ -49,6 +59,27 @@ final class CurrentWeatherViewController: UIViewController {
         let alertController = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
         let dismissAction = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
         alertController.addAction(dismissAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+
+    func showErrorAlertToEnableLocation(message: String) {
+        let alertController = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+
+        let enableLocationAction = UIAlertAction(title: "Setting", style: .default) { (_) -> Void in
+            guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
+                return
+            }
+
+            if UIApplication.shared.canOpenURL(settingsUrl) {
+                UIApplication.shared.open(settingsUrl, completionHandler: { (success) in
+                })
+            }
+        }
+
+        let dismissAction = UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)
+        alertController.addAction(dismissAction)
+        alertController.addAction(enableLocationAction)
+
         self.present(alertController, animated: true, completion: nil)
     }
 
@@ -68,6 +99,22 @@ final class CurrentWeatherViewController: UIViewController {
 
     @objc func didReceiveLocation(_ notification: Notification) {
         fetchData()
+    }
+
+    @IBAction func didPressedShare(_ sender: UIButton) {
+        guard let weatherData = currentWeathInteractor.weatherResponse else { return }
+        guard let weather = weatherData.weather else { return }
+
+        guard let main = weatherData.main else { return }
+
+        let textToShare = String(format: "Weather in %@ %@ is %@ | %@°C ", weatherData.name ?? "" , weatherData.sys?.countryFullName ?? "", weather.description ?? "", main.temperatureCelcius)
+
+        let activities = [textToShare]
+
+        let activityViewController = UIActivityViewController(activityItems: activities, applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view
+
+        self.present(activityViewController, animated: true, completion: nil)
     }
 
     private func setupNavigationItem() {
@@ -96,19 +143,19 @@ final class CurrentWeatherViewController: UIViewController {
 
         let iconName = weather.icon?.largeIconName ?? ""
         weatherIconImageView.image =  UIImage(named: iconName)
-        locationLabel.text =  "\(weatherData.name ?? "") \(weatherData.sys?.countryFullName ?? "")"
-        temperatureLabel.text = "\(main.temperatureCelcius) | \(weather.description ?? "")"
+        locationLabel.text =  "\(weatherData.name ?? ""), \(weatherData.sys?.countryFullName ?? "")"
+        temperatureLabel.text = "\(main.temperatureCelcius)°C | \(weather.main ?? "")"
 
         if let pressure = main.pressure {
-            pressureLabel.text = "\(pressure)"
+            pressureLabel.text = "\(pressure) hPa"
         }
 
         if let humidity = main.humidity {
-            hummidityLabel.text = "\(humidity)"
+            hummidityLabel.text = "\(humidity)%"
         }
 
         if let windSpeed = weatherData.wind?.speed {
-            windLabel.text = "\(windSpeed)"
+            windLabel.text = "\(windSpeed) km/h"
         }
 
         if let windDeg = weatherData.wind?.deg {

@@ -5,16 +5,13 @@ import CoreLocation
 final class ForecastViewController: UIViewController {
 
     static let height: CGFloat = 80
+    static let HeaderHeight: CGFloat = 50
+
     static let cellIdentifier = "ForecastTableViewCell"
+    @IBOutlet weak var headerSeperator: UIView!
+    @IBOutlet weak var tableView: UITableView!
 
     fileprivate let forecastInteractor: ForecastInteractor
-
-    fileprivate lazy var tableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .plain)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.backgroundColor = .white
-        return tableView
-    }()
 
     init() {
         forecastInteractor = ForecastInteractor()
@@ -33,20 +30,30 @@ final class ForecastViewController: UIViewController {
 
         tableView.register(ForecastTableViewCell.self, forCellReuseIdentifier: ForecastViewController.cellIdentifier)
 
+        tableView.register(CustomHeaderTableViewHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: CustomHeaderTableViewHeaderFooterView.reuseIdentifer)
+
         tableView.tableFooterView = UIView()
         tableView.dataSource = self
         tableView.delegate = self
 
         setupNotifications()
         setupNavigationItem()
-        addComponents()
-        layoutComponents()
         setupLoadCompletion()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchData()
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        UIGraphicsBeginImageContext(view.frame.size)
+        UIImage(named: "2px Line")?.draw(in: self.view.bounds)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        headerSeperator.backgroundColor = UIColor.init(patternImage: image!)
     }
 
     func showErrorAlert(message: String) {
@@ -75,20 +82,7 @@ final class ForecastViewController: UIViewController {
     }
 
     private func setupNavigationItem() {
-        navigationItem.title = "GitHub DM"
-    }
-
-    private func addComponents() {
-        view.addSubview(tableView)
-    }
-
-    private func layoutComponents() {
-        NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            ])
+        navigationItem.title = forecastInteractor.cityName
     }
 
     fileprivate func fetchData() {
@@ -98,6 +92,7 @@ final class ForecastViewController: UIViewController {
     private func setupLoadCompletion() {
         forecastInteractor.requestloadForecastCompleteHandler = { [weak self] () in
             guard let localSelf = self else { return }
+            localSelf.setupNavigationItem()
             localSelf.tableView.reloadData()
         }
     }
@@ -109,10 +104,21 @@ extension ForecastViewController: UITableViewDataSource {
         return forecastInteractor.numberOfDaysForecasting
     }
 
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        guard let weatherData = forecastInteractor.forecastingWeatherByDay[section]?.first else { return "" }
-        return weatherData.isToday ? "Today" : weatherData.dayInWeek
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: CustomHeaderTableViewHeaderFooterView.reuseIdentifer) as? CustomHeaderTableViewHeaderFooterView else {
+            return nil
+        }
+
+        guard let weatherData = forecastInteractor.forecastingWeatherByDay[section]?.first else { return nil }
+
+        header.titleLabel.text = weatherData.isToday ? "TODAY" : weatherData.dayInWeek.uppercased()
+        return header
     }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return ForecastViewController.HeaderHeight
+    }
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return ForecastViewController.height
     }
@@ -126,7 +132,8 @@ extension ForecastViewController: UITableViewDataSource {
         cell.accessoryType = .none
 
         let weatherData = forecastInteractor.forecastingWeatherByDay[indexPath.section]?[indexPath.row]
-        cell.configure(weatherData: weatherData)
+        let arrayCount = forecastInteractor.forecastingWeatherByDay[indexPath.section]?.count ?? 0
+        cell.configure(weatherData: weatherData, needToDrawSeperator: indexPath.row < arrayCount - 1)
         return cell
     }
 }

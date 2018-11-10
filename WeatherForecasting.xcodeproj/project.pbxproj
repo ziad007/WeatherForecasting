@@ -9,9 +9,13 @@
 /* Begin PBXBuildFile section */
 		87519FFB66236282129A31C1 /* Pods_WeatherForecasting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DA6CB3F77BC5DA70FDCD3D7 /* Pods_WeatherForecasting.framework */; };
 		CF9222332EDD6E1635721546 /* Pods_WeatherForecastingTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0799521453CA90610F13D00B /* Pods_WeatherForecastingTests.framework */; };
+		F7291FEA2196302900FE7220 /* FirebaseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7291FE92196302900FE7220 /* FirebaseStore.swift */; };
+		F7291FEC219638AD00FE7220 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7291FEB219638AD00FE7220 /* Location.swift */; };
+		F7291FEE2196EE1D00FE7220 /* CustomHeaderTableViewHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7291FED2196EE1D00FE7220 /* CustomHeaderTableViewHeaderFooterView.swift */; };
+		F7291FF021973EAA00FE7220 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7291FEF21973EAA00FE7220 /* City.swift */; };
+		F7291FF22197628F00FE7220 /* ForecastViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7291FF12197628F00FE7220 /* ForecastViewController.xib */; };
 		F75396B5218F110B00C660D5 /* UIColor+utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75396B4218F110B00C660D5 /* UIColor+utils.swift */; };
-		F75396B8218F25ED00C660D5 /* LocationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75396B7218F25ED00C660D5 /* LocationStore.swift */; };
-		F75396BA218F276A00C660D5 /* WeatherDatatore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75396B9218F276A00C660D5 /* WeatherDatatore.swift */; };
+		F75396BA218F276A00C660D5 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75396B9218F276A00C660D5 /* DataStore.swift */; };
 		F75396BC218F3D8800C660D5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F75396BB218F3D8800C660D5 /* GoogleService-Info.plist */; };
 		F75396C8218F3F4A00C660D5 /* CurrentWeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75396C5218F3F4A00C660D5 /* CurrentWeatherService.swift */; };
 		F75396C9218F3F4A00C660D5 /* CurrentWeatherViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F75396C6218F3F4A00C660D5 /* CurrentWeatherViewController.xib */; };
@@ -62,9 +66,13 @@
 		1DA6CB3F77BC5DA70FDCD3D7 /* Pods_WeatherForecasting.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeatherForecasting.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C85BED27327FACE50A5ED09F /* Pods-WeatherForecastingTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherForecastingTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WeatherForecastingTests/Pods-WeatherForecastingTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D5A631BF40E615816F510A9F /* Pods-WeatherForecastingTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherForecastingTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeatherForecastingTests/Pods-WeatherForecastingTests.release.xcconfig"; sourceTree = "<group>"; };
+		F7291FE92196302900FE7220 /* FirebaseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStore.swift; sourceTree = "<group>"; };
+		F7291FEB219638AD00FE7220 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		F7291FED2196EE1D00FE7220 /* CustomHeaderTableViewHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHeaderTableViewHeaderFooterView.swift; sourceTree = "<group>"; };
+		F7291FEF21973EAA00FE7220 /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
+		F7291FF12197628F00FE7220 /* ForecastViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ForecastViewController.xib; sourceTree = "<group>"; };
 		F75396B4218F110B00C660D5 /* UIColor+utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+utils.swift"; sourceTree = "<group>"; };
-		F75396B7218F25ED00C660D5 /* LocationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationStore.swift; sourceTree = "<group>"; };
-		F75396B9218F276A00C660D5 /* WeatherDatatore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDatatore.swift; sourceTree = "<group>"; };
+		F75396B9218F276A00C660D5 /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		F75396BB218F3D8800C660D5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F75396C5218F3F4A00C660D5 /* CurrentWeatherService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentWeatherService.swift; sourceTree = "<group>"; };
 		F75396C6218F3F4A00C660D5 /* CurrentWeatherViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CurrentWeatherViewController.xib; sourceTree = "<group>"; };
@@ -145,8 +153,8 @@
 		F75396B6218F25D800C660D5 /* Persistance */ = {
 			isa = PBXGroup;
 			children = (
-				F75396B7218F25ED00C660D5 /* LocationStore.swift */,
-				F75396B9218F276A00C660D5 /* WeatherDatatore.swift */,
+				F75396B9218F276A00C660D5 /* DataStore.swift */,
+				F7291FE92196302900FE7220 /* FirebaseStore.swift */,
 			);
 			path = Persistance;
 			sourceTree = "<group>";
@@ -211,12 +219,12 @@
 		F77FA893218CD18E00000C28 /* WeatherForecasting */ = {
 			isa = PBXGroup;
 			children = (
-				F75396BD218F3EF600C660D5 /* Controllers */,
-				F75396B6218F25D800C660D5 /* Persistance */,
-				F7D365BF218EFD8500F334D7 /* Fonts */,
-				F77FA8C5218DC1B800000C28 /* Models */,
 				F77FA8BE218DC1AB00000C28 /* Helpers */,
+				F7D365BF218EFD8500F334D7 /* Fonts */,
+				F75396BD218F3EF600C660D5 /* Controllers */,
+				F77FA8C5218DC1B800000C28 /* Models */,
 				F77FA8B4218DC19400000C28 /* Network */,
+				F75396B6218F25D800C660D5 /* Persistance */,
 				F77FA894218CD18E00000C28 /* AppDelegate.swift */,
 				F77FA89B218CD19000000C28 /* Assets.xcassets */,
 				F77FA89D218CD19000000C28 /* LaunchScreen.storyboard */,
@@ -275,6 +283,8 @@
 				F7D365AB218DDADD00F334D7 /* WeatherData.swift */,
 				F7D365AD218DF6C300F334D7 /* Sys.swift */,
 				F7D365AF218E287000F334D7 /* Forcast.swift */,
+				F7291FEB219638AD00FE7220 /* Location.swift */,
+				F7291FEF21973EAA00FE7220 /* City.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -286,6 +296,7 @@
 				F7D365BA218E4ECE00F334D7 /* Cell */,
 				F7D365B2218E4A4700F334D7 /* ForecastInteractor.swift */,
 				F7D365B6218E4A6D00F334D7 /* ForecastViewController.swift */,
+				F7291FF12197628F00FE7220 /* ForecastViewController.xib */,
 			);
 			path = Forcasts;
 			sourceTree = "<group>";
@@ -294,6 +305,7 @@
 			isa = PBXGroup;
 			children = (
 				F7D365BB218E4F4900F334D7 /* ForecastTableViewCell.swift */,
+				F7291FED2196EE1D00FE7220 /* CustomHeaderTableViewHeaderFooterView.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -394,6 +406,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F75396C9218F3F4A00C660D5 /* CurrentWeatherViewController.xib in Resources */,
+				F7291FF22197628F00FE7220 /* ForecastViewController.xib in Resources */,
 				F77FA89F218CD19000000C28 /* LaunchScreen.storyboard in Resources */,
 				F75396BC218F3D8800C660D5 /* GoogleService-Info.plist in Resources */,
 				F7D365C4218EFD9200F334D7 /* ProximaNova-Regular.otf in Resources */,
@@ -484,17 +497,20 @@
 				F77FA8C4218DC1AC00000C28 /* Colors+utils.swift in Sources */,
 				F7D365AE218DF6C300F334D7 /* Sys.swift in Sources */,
 				F77FA8CA218DC1B800000C28 /* Weather.swift in Sources */,
-				F75396B8218F25ED00C660D5 /* LocationStore.swift in Sources */,
 				F75396C8218F3F4A00C660D5 /* CurrentWeatherService.swift in Sources */,
+				F7291FF021973EAA00FE7220 /* City.swift in Sources */,
 				F77FA8BD218DC19400000C28 /* WeatherApi.swift in Sources */,
 				F7D365A8218DD73E00F334D7 /* Main.swift in Sources */,
 				F75396B5218F110B00C660D5 /* UIColor+utils.swift in Sources */,
 				F77FA8C3218DC1AC00000C28 /* GlobalFunctions.swift in Sources */,
+				F7291FEE2196EE1D00FE7220 /* CustomHeaderTableViewHeaderFooterView.swift in Sources */,
 				F7D365BC218E4F4900F334D7 /* ForecastTableViewCell.swift in Sources */,
 				F7D365B0218E287000F334D7 /* Forcast.swift in Sources */,
+				F7291FEC219638AD00FE7220 /* Location.swift in Sources */,
 				F7D365B3218E4A4700F334D7 /* ForecastInteractor.swift in Sources */,
-				F75396BA218F276A00C660D5 /* WeatherDatatore.swift in Sources */,
+				F75396BA218F276A00C660D5 /* DataStore.swift in Sources */,
 				F7D365AA218DD9ED00F334D7 /* Wind.swift in Sources */,
+				F7291FEA2196302900FE7220 /* FirebaseStore.swift in Sources */,
 				F7D365BE218E577300F334D7 /* DateFormatter+Utils.swift in Sources */,
 				F75396CA218F3F4A00C660D5 /* CurrentWeatherInteractor.swift in Sources */,
 				F77FA8BC218DC19400000C28 /* APICall.swift in Sources */,
