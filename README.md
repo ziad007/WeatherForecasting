@@ -11,6 +11,8 @@ In this project i made a simple weather app with the following features:
 
 Note: Precipitation field was not found in the api result.
 
+(Weather Diagram.png)
+
 ### Architecture
 
 In this project I have implemented a scalable, maintainable and testable application, I had chosen a simple architecture, fast in terms of development time based on 3 components:
