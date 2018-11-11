@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     let locationManager = CLLocationManager()
     var deviceID: String = ""
-    fileprivate let checkWeatherInterval: Double = 20
+    fileprivate let checkWeatherInterval: Double = 50
 
     fileprivate var fetchWeatherIfNeeded: Bool = true
 
