@@ -6,7 +6,7 @@ final class ForecastTableViewCell: UITableViewCell {
     static let seperatorViewHeight: CGFloat = 0.2
 
 
-    fileprivate lazy var seperatoHeightConstraint = {
+    fileprivate lazy var seperatorHeightConstraint = {
        return seperatorView.heightAnchor.constraint(equalToConstant: ForecastTableViewCell.seperatorViewHeight)
     }()
 
@@ -79,9 +79,9 @@ final class ForecastTableViewCell: UITableViewCell {
         super.layoutSubviews()
 
         if needToDrawSeperator {
-            seperatoHeightConstraint.constant = ForecastTableViewCell.seperatorViewHeight
+            seperatorHeightConstraint.constant = ForecastTableViewCell.seperatorViewHeight
         } else {
-            seperatoHeightConstraint.constant = 0
+            seperatorHeightConstraint.constant = 0
         }
     }
 
@@ -118,7 +118,7 @@ final class ForecastTableViewCell: UITableViewCell {
             seperatorView.leadingAnchor.constraint(equalTo: labelStackView.leadingAnchor),
 
             seperatorView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            seperatoHeightConstraint
+            seperatorHeightConstraint
             ])
     }
 
