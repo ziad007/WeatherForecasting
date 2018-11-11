@@ -11,7 +11,7 @@ In this project i made a simple weather app with the following features:
 
 Note: Precipitation field was not found in the api result.
 
-(Weather Diagram.png)
+![picture](Weather Diagram.png)
 
 ### Architecture
 
