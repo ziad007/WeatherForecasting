@@ -14,7 +14,7 @@ final class ForecastInteractor: ForecastInteractorInputs, ForecastInteractorOutp
     var forecastingWeatherByDay = Dictionary<Int, [WeatherData]>()
     let numberOfDaysForecasting = 5
 
-    var forecastService: ForecastService
+    var forecastService: ForecastServiceProtocol
     weak var controller: ForecastViewController?
     var requestloadForecastCompleteHandler: (() -> Void)?
 

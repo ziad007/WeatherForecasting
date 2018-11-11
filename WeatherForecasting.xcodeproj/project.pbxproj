@@ -36,7 +36,7 @@
 		F7D365AA218DD9ED00F334D7 /* Wind.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D365A9218DD9ED00F334D7 /* Wind.swift */; };
 		F7D365AC218DDADD00F334D7 /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D365AB218DDADD00F334D7 /* WeatherData.swift */; };
 		F7D365AE218DF6C300F334D7 /* Sys.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D365AD218DF6C300F334D7 /* Sys.swift */; };
-		F7D365B0218E287000F334D7 /* Forcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D365AF218E287000F334D7 /* Forcast.swift */; };
+		F7D365B0218E287000F334D7 /* Forecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D365AF218E287000F334D7 /* Forecast.swift */; };
 		F7D365B3218E4A4700F334D7 /* ForecastInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D365B2218E4A4700F334D7 /* ForecastInteractor.swift */; };
 		F7D365B5218E4A5300F334D7 /* ForecastService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D365B4218E4A5300F334D7 /* ForecastService.swift */; };
 		F7D365B7218E4A6D00F334D7 /* ForecastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D365B6218E4A6D00F334D7 /* ForecastViewController.swift */; };
@@ -97,7 +97,7 @@
 		F7D365A9218DD9ED00F334D7 /* Wind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wind.swift; sourceTree = "<group>"; };
 		F7D365AB218DDADD00F334D7 /* WeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
 		F7D365AD218DF6C300F334D7 /* Sys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sys.swift; sourceTree = "<group>"; };
-		F7D365AF218E287000F334D7 /* Forcast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Forcast.swift; sourceTree = "<group>"; };
+		F7D365AF218E287000F334D7 /* Forecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Forecast.swift; sourceTree = "<group>"; };
 		F7D365B2218E4A4700F334D7 /* ForecastInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastInteractor.swift; sourceTree = "<group>"; };
 		F7D365B4218E4A5300F334D7 /* ForecastService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastService.swift; sourceTree = "<group>"; };
 		F7D365B6218E4A6D00F334D7 /* ForecastViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastViewController.swift; sourceTree = "<group>"; };
@@ -282,7 +282,7 @@
 				F7D365A9218DD9ED00F334D7 /* Wind.swift */,
 				F7D365AB218DDADD00F334D7 /* WeatherData.swift */,
 				F7D365AD218DF6C300F334D7 /* Sys.swift */,
-				F7D365AF218E287000F334D7 /* Forcast.swift */,
+				F7D365AF218E287000F334D7 /* Forecast.swift */,
 				F7291FEB219638AD00FE7220 /* Location.swift */,
 				F7291FEF21973EAA00FE7220 /* City.swift */,
 			);
@@ -505,7 +505,7 @@
 				F77FA8C3218DC1AC00000C28 /* GlobalFunctions.swift in Sources */,
 				F7291FEE2196EE1D00FE7220 /* CustomHeaderTableViewHeaderFooterView.swift in Sources */,
 				F7D365BC218E4F4900F334D7 /* ForecastTableViewCell.swift in Sources */,
-				F7D365B0218E287000F334D7 /* Forcast.swift in Sources */,
+				F7D365B0218E287000F334D7 /* Forecast.swift in Sources */,
 				F7291FEC219638AD00FE7220 /* Location.swift in Sources */,
 				F7D365B3218E4A4700F334D7 /* ForecastInteractor.swift in Sources */,
 				F75396BA218F276A00C660D5 /* DataStore.swift in Sources */,

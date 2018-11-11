@@ -154,7 +154,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WeatherForecasting/Network/APICall.swift"
-            timestampString = "563575068.627812"
+            timestampString = "563645927.9302109"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "59"
@@ -224,6 +224,22 @@
             startingLineNumber = "24"
             endingLineNumber = "24"
             landmarkName = "getData(for:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WeatherForecasting/Controllers/Forcasts/ForecastInteractor.swift"
+            timestampString = "563652900.776418"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "41"
+            endingLineNumber = "41"
+            landmarkName = "fetchForecasting()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
