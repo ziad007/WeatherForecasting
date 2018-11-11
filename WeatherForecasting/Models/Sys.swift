@@ -5,7 +5,7 @@ struct Sys {
 
     var countryFullName: String? {
 
-        if let name = (Locale.current as NSLocale).displayName(forKey: .countryCode, value: country) {
+        if let name = (Locale.current as NSLocale).displayName(forKey: .countryCode, value: country ?? "") {
             // Country name was found
             return name
         } else {
