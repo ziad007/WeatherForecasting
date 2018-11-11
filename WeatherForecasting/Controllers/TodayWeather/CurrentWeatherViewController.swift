@@ -107,7 +107,7 @@ final class CurrentWeatherViewController: UIViewController {
 
         guard let main = weatherData.main else { return }
 
-        let textToShare = String(format: "Weather in %@, %@ is %@  %@°C ", weatherData.name ?? "" , weatherData.sys?.countryFullName ?? "", weather.description ?? "", main.temperatureCelcius)
+        let textToShare = String(format: "Today weather: %@; temperature is %@°C ",  weather.description ?? "", main.temperatureCelcius)
 
         let activities = [textToShare]
 
