@@ -8,6 +8,7 @@ In this project i made a simple weather app with the following features:
 - Offline mode: save Location and weather data in preferences for offline mode and in Firebase and I used for storing in Firebase the device UUID instead of userid because we don't have user registration/login as a requirement.
 - Handle scenario if user denied access to Location
 - Handle api error
+- Unit testing 
 
 Note: Precipitation field was not found in the api result.
 
